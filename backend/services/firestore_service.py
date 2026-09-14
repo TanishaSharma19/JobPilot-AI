@@ -1,9 +1,27 @@
+import os
 from google.cloud import firestore
+from google.oauth2 import service_account
 
-db = firestore.Client(
-    project="master-choir-506517-b8",
-    database="jobpilot-db"
-)
+PROJECT_ID = "master-choir-506517-b8"
+DATABASE_ID = "jobpilot-db"
+
+credentials_json = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON")
+
+if credentials_json:
+    credentials = service_account.Credentials.from_service_account_info(
+        __import__("json").loads(credentials_json)
+    )
+
+    db = firestore.Client(
+        project=PROJECT_ID,
+        database=DATABASE_ID,
+        credentials=credentials,
+    )
+else:
+    db = firestore.Client(
+        project=PROJECT_ID,
+        database=DATABASE_ID,
+    )
 
 
 def get_user_by_email(email: str):

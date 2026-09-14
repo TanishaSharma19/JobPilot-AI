@@ -2,6 +2,7 @@ from fastapi import Depends, FastAPI, Header, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
+load_dotenv()
 from datetime import datetime, timedelta, timezone
 import base64
 import hashlib
@@ -28,8 +29,6 @@ from services.firestore_service import (
     update_job_analysis_status,
     update_user_password,
 )
-
-load_dotenv()
 
 app = FastAPI(
     title="JobPilot AI",
