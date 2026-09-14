@@ -1,4 +1,6 @@
 import os
+import json
+
 from google.cloud import firestore
 from google.oauth2 import service_account
 
@@ -7,22 +9,35 @@ DATABASE_ID = "jobpilot-db"
 
 credentials_json = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON")
 
-if credentials_json:
+print(
+    "GOOGLE_APPLICATION_CREDENTIALS_JSON present:",
+    bool(credentials_json),
+    "length:",
+    len(credentials_json or "")
+)
+
+if not credentials_json:
+    raise RuntimeError(
+        "GOOGLE_APPLICATION_CREDENTIALS_JSON is missing or empty in Render."
+    )
+
+try:
+    credentials_info = json.loads(credentials_json)
+
     credentials = service_account.Credentials.from_service_account_info(
-        __import__("json").loads(credentials_json)
+        credentials_info
     )
 
-    db = firestore.Client(
-        project=PROJECT_ID,
-        database=DATABASE_ID,
-        credentials=credentials,
-    )
-else:
-    db = firestore.Client(
-        project=PROJECT_ID,
-        database=DATABASE_ID,
+except json.JSONDecodeError:
+    raise RuntimeError(
+        "GOOGLE_APPLICATION_CREDENTIALS_JSON is not valid JSON."
     )
 
+db = firestore.Client(
+    project=PROJECT_ID,
+    database=DATABASE_ID,
+    credentials=credentials,
+)
 
 def get_user_by_email(email: str):
     users = db.collection("users").where("email", "==", email).limit(1).stream()
