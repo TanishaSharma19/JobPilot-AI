@@ -55,7 +55,7 @@ function AuthScreen({ onAuthenticated }) {
   return (
     <main className="auth-page">
       <section className="auth-card panel">
-        <a className="brand auth-brand" href="#top"><span className="brand-mark">✦</span><span><strong>JobPilot AI</strong><small>Agentic AI Career Assistant</small></span></a>
+        <a className="brand auth-brand" href="#top"><span className="brand-mark">✦</span><span><strong>JobAI Pilot</strong><small>AI Career Assistant</small></span></a>
         <div className="auth-intro"><span className="eyebrow">Your career command center</span><h1>{title}</h1><p>{mode === "forgot" ? "Enter your email and we will prepare a password reset." : "Keep your analyses and career plans in one workspace."}</p></div>
         <form onSubmit={submit}>
           {mode === "register" && <label className="auth-field"><span>Full name</span><input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></label>}
@@ -128,7 +128,7 @@ function LoadingState() {
       <div className="loading-orbit"><span>✦</span></div>
       <span className="eyebrow">Agent in progress</span>
       <h2>Analyzing your opportunity...</h2>
-      <p>JobPilot is connecting the dots across this role and your experience.</p>
+      <p>JobAI Pilot is connecting the dots across this role and your experience.</p>
       <div className="stage-list">
         {loadingStages.map((stage, index) => (
           <div className={`stage stage-${index}`} key={stage}>
@@ -292,7 +292,7 @@ function App() {
   return (
     <div className="app">
       <header className="topbar">
-        <a className="brand" href="#top"><span className="brand-mark">✦</span><span><strong>JobPilot AI</strong><small>Agentic AI Career Assistant</small></span></a>
+        <a className="brand" href="#top"><span className="brand-mark">✦</span><span><strong>JobAI Pilot</strong><small>AI Career Assistant</small></span></a>
         <div className="top-actions"><button className="icon-button" aria-label="Notifications">♢<span /></button><button className="avatar" title="Sign out" onClick={() => { localStorage.removeItem("jobpilot_token"); setToken(null); setUser(null); }}> {user.name?.slice(0, 2).toUpperCase() || "JD"} </button></div>
       </header>
 
