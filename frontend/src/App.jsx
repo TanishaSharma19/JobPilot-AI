@@ -147,7 +147,6 @@ function App() {
   const [analysis, setAnalysis] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [fileName, setFileName] = useState("");
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(() => localStorage.getItem("jobpilot_token"));
   const [authChecking, setAuthChecking] = useState(() => Boolean(localStorage.getItem("jobpilot_token")));
@@ -201,13 +200,6 @@ function App() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleFile = (event) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    setFileName(file.name);
-    setCandidateProfile((current) => current || `Resume uploaded: ${file.name}`);
   };
 
   const clearJob = () => {
@@ -301,7 +293,7 @@ function App() {
           <section className="hero-copy" id="analyze"><div className="hero-glow" /><span className="eyebrow">AI career intelligence <span className="live-dot" /> Live analysis</span><h1>Turn Any Job Description<br /><em>Into Your Career Strategy</em></h1><p>AI-powered job analysis that instantly identifies your strengths, skill gaps, and the actions you should take to improve your application.</p></section>
           <section className="input-grid panel">
           <div className="input-card"><div className="input-header"><div><span className="eyebrow">Step 01</span><h2>Job Description</h2></div><span className="input-icon">▤</span></div><textarea aria-label="Job Description" placeholder="Paste the job description here..." value={jobDescription} onChange={(e) => setJobDescription(e.target.value)} /><div className="input-footer"><span>{jobDescription.length} characters</span><div><button className="text-button" onClick={() => navigator.clipboard?.readText().then(setJobDescription)}>↙ Paste</button><button className="text-button" onClick={clearJob}>Clear</button></div></div></div>
-          <div className="input-card"><div className="input-header"><div><span className="eyebrow">Step 02</span><h2>Candidate Profile</h2></div><span className="input-icon">◎</span></div><textarea aria-label="Candidate Profile" placeholder="Tell us about your skills, experience, and projects..." value={candidateProfile} onChange={(e) => setCandidateProfile(e.target.value)} /><label className="upload-zone"><input type="file" accept=".pdf,.doc,.docx,.txt" onChange={handleFile} /><span>↑</span><b>{fileName ? fileName : "Drop your resume here"}</b><small>{fileName ? "Resume ready to analyze" : "or click to browse · PDF, DOCX"}</small></label>{fileName && <button className="remove-file" onClick={() => { setFileName(""); setCandidateProfile(""); }}>Remove file ×</button>}</div>
+          <div className="input-card"><div className="input-header"><div><span className="eyebrow">Step 02</span><h2>Candidate Profile</h2></div><span className="input-icon">◎</span></div><textarea aria-label="Candidate Profile" placeholder="Tell us about your skills, experience, and projects..." value={candidateProfile} onChange={(e) => setCandidateProfile(e.target.value)} /></div>
           </section>
           <div className="analyze-row"><button className="primary-button analyze-button" onClick={analyzeJob} disabled={loading}>{loading ? "Analyzing opportunity..." : "Analyze Job  ↗"}</button>{error && <p className="error" role="alert">{error}</p>}</div>
           {loading && <LoadingState />}
