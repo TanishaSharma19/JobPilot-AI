@@ -9,7 +9,7 @@ const loadingStages = [
   "Identifying skill gaps",
   "Building your action plan",
 ];
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";;
 
 function AuthScreen({ onAuthenticated }) {
   const [mode, setMode] = useState("login");
